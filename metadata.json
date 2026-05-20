@@ -1,0 +1,6 @@
+{
+  "name": "ToddlerLock",
+  "description": "Secure ToddlerLock utility to transparently block all screen touch events when needed.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

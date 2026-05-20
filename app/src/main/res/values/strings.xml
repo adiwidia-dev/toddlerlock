@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ToddlerLock</string>
+    <string name="accessibility_service_description">ToddlerLock uses this service to listen for Volume Up + Down button presses to toggle the screen lock.</string>
+</resources>
