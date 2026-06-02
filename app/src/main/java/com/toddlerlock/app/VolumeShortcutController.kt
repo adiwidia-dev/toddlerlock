@@ -46,7 +46,7 @@ class VolumeShortcutController {
       return VolumeShortcutDecision(consume = overlayLocked, cancelHold = true)
     }
 
-    return VolumeShortcutDecision(consume = overlayLocked || bothPressed)
+    return VolumeShortcutDecision(consume = bothPressed)
   }
 
   fun markHoldCompleted() {

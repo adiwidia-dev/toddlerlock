@@ -72,7 +72,7 @@ class VolumeShortcutControllerTest {
   }
 
   @Test
-  fun lockedOverlayConsumesBackAndVolumeKeys() {
+  fun lockedOverlayConsumesBackButAllowsSingleVolumeKeys() {
     val controller = VolumeShortcutController()
 
     val backDecision =
@@ -91,6 +91,28 @@ class VolumeShortcutControllerTest {
       )
 
     assertTrue(backDecision.consume)
-    assertTrue(volumeDecision.consume)
+    assertFalse(volumeDecision.consume)
+  }
+
+  @Test
+  fun lockedOverlayConsumesVolumeComboForUnlockShortcut() {
+    val controller = VolumeShortcutController()
+
+    controller.onKeyEvent(
+      keyCode = KeyEvent.KEYCODE_VOLUME_UP,
+      action = KeyEvent.ACTION_DOWN,
+      shortcutArmed = true,
+      overlayLocked = true,
+    )
+    val comboDecision =
+      controller.onKeyEvent(
+        keyCode = KeyEvent.KEYCODE_VOLUME_DOWN,
+        action = KeyEvent.ACTION_DOWN,
+        shortcutArmed = true,
+        overlayLocked = true,
+      )
+
+    assertTrue(comboDecision.consume)
+    assertTrue(comboDecision.startHold)
   }
 }
