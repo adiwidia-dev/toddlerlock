@@ -2,6 +2,17 @@
 
 All notable changes to ToddlerLock will be documented in this file.
 
+## v1.1.0 - 2026-06-02
+
+### Fixed
+
+- Allow normal Volume Up and Volume Down presses to adjust media or call volume while ToddlerLock is active.
+- Keep the Volume Up + Volume Down shortcut reserved for activating and deactivating the touch lock.
+
+### Changed
+
+- Updated app version to `1.1.0`.
+
 ## v1.0.0 - 2026-06-02
 
 ### Added
