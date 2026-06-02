@@ -9,10 +9,10 @@ A robust, elegant, and secure utility app built natively for Android using **Kot
 ## ✨ Features
 
 - **Transparent Input Blocker**: Creates a zero-latency, full-screen transparent overlay using Android's native `WindowManager` that intercepts and consumes all touches, clicks, and drags.
-- **Hardware-Key Toggle**: Tap and hold **Volume Up** and **Volume Down** simultaneously for **3 physical seconds** to securely engage/disengage the lock from anywhere in the system.
+- **Armed Hardware Shortcut**: Enable the shortcut in ToddlerLock, then hold **Volume Up** and **Volume Down** simultaneously for **3 physical seconds** to engage or disengage the touch blocker from another app.
 - **Custom Adaptive Banner**: Display a clean, highly polished status notification on lock state activation reminding the parent how to unlock the device safely.
 - **Natural Tones UI Theme**: Beautiful and distinct Material 3 color system featuring sage greens, warm biscuit tones, charcoal headers, and soft red warnings, designed to look clean and integrated.
-- **Local Activity Log**: Fully functional interactive status trace tab where operations (such as lock bindings, starts, inputs, and releases) are logged dynamically.
+- **Simple Configuration Screen**: The app screen is used to grant permissions and arm or disarm the global hardware shortcut.
 - **Instructional Troubleshooter**: Comprehensive support for modern Android platforms including sideload warnings and Restricted Settings instructions.
 
 ---
@@ -26,8 +26,8 @@ The codebase follows modern Android development practices:
    - Employs a precise, non-blocking coroutine countdown key timer (exactly 3 seconds) for the dual-key trigger.
    - Dynamically manages a `TYPE_APPLICATION_OVERLAY` full-screen frame layout.
 2. **`MainActivity` (Jetpack Compose UI)**:
-   - Uses MVVM-style state collection (`collectAsStateWithLifecycle`) bound to the service instance.
-   - Checks permission states reactively and guides users through system preference intents.
+   - Uses lifecycle-aware state collection (`collectAsStateWithLifecycle`) bound to the service state.
+   - Checks permission states reactively, guides users through system preference intents, and arms or disarms the hardware shortcut.
 3. **`MyApplicationTheme` (Natural Tones Styling)**:
    - Centered around an earth-toned color palette (`SageGreen`, `BiscuitBeige`, `Charcoal`, and `WarmBackground`).
 
@@ -63,6 +63,9 @@ Because ToddlerLock is installed as a custom utility app, newer Android platform
 ---
 
 ## 🧪 Testing the Lock
-Once both permissions are active, there are two easy ways to verify the block state:
-- **Instant/Countdown Test**: Use the **5s Preview** countdown button on the dashboard to test interaction safely. Switch to any video or call, watch the banner pop up, and test the screen input lock.
-- **Hardware Trigger**: Press and hold both volume buttons simultaneously for 3 seconds to test engaging/disengaging ToddlerLock from any active screen on your phone.
+Once both permissions are active:
+1. Enable the ToddlerLock shortcut in the app.
+2. Open WhatsApp, YouTube, or another target app.
+3. Hold both volume buttons simultaneously for 3 seconds to engage the touch blocker.
+4. Hold both volume buttons again for 3 seconds to disengage it.
+5. Disable the shortcut in ToddlerLock when you want volume button presses to be ignored by the lock feature.

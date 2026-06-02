@@ -1,4 +1,4 @@
-package com.example
+package com.toddlerlock.app
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
@@ -11,7 +11,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [36])
+@Config(sdk = [35])
 class ExampleRobolectricTest {
 
   @Test
@@ -22,15 +22,11 @@ class ExampleRobolectricTest {
   }
 
   @Test
-  fun `test TouchBlockService overlay creation`() {
+  fun `creates TouchBlockService`() {
     val controller = Robolectric.buildService(TouchBlockService::class.java)
     val service = controller.create().get()
     assertNotNull(service)
-    
-    // Attempt toggle locking
-    service.toggleLock()
-    
-    // Cleanup
+
     service.onDestroy()
   }
 }

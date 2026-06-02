@@ -1,4 +1,4 @@
-package com.example.ui.theme
+package com.toddlerlock.app.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
