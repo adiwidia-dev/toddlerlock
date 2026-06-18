@@ -6,9 +6,9 @@ This project publishes release APKs manually through the GitHub Releases web UI.
 
 Current release target:
 
-- Tag: `v1.1.0`
-- App version name: `1.1.0`
-- App version code: `2`
+- Tag: `v1.2.0`
+- App version name: `1.2.0`
+- App version code: `3`
 
 ## Pre-release Checks
 
@@ -70,12 +70,12 @@ app/build/outputs/apk/release/app-release.apk
 2. Create and push the tag:
 
 ```bash
-git tag -a v1.1.0 -m "ToddlerLock v1.1.0"
+git tag -a v1.2.0 -m "ToddlerLock v1.2.0"
 git push origin main
-git push origin v1.1.0
+git push origin v1.2.0
 ```
 
 3. Open GitHub Releases in the browser.
-4. Create release `v1.1.0`.
+4. Create release `v1.2.0`.
 5. Upload `app/build/outputs/apk/release/app-release.apk`.
 6. Use `CHANGELOG.md` as the source for release notes.

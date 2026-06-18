@@ -3,6 +3,7 @@ package com.toddlerlock.app
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,5 +29,15 @@ class ExampleRobolectricTest {
     assertNotNull(service)
 
     service.onDestroy()
+  }
+
+  @Test
+  fun `banking safe mode disarms shortcut even when service is unavailable`() {
+    TouchBlockService.setShortcutArmed(true)
+
+    val result = TouchBlockService.enterBankingSafeMode()
+
+    assertEquals(TouchBlockService.BankingSafeModeResult.ServiceUnavailable, result)
+    assertFalse(TouchBlockService.isShortcutArmed.value)
   }
 }

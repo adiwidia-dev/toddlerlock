@@ -35,6 +35,11 @@ class TouchBlockService : AccessibilityService() {
   private var overlayView: View? = null
   private var keyHoldJob: Job? = null
 
+  enum class BankingSafeModeResult {
+    AccessibilityServiceDisabled,
+    ServiceUnavailable,
+  }
+
   companion object {
     val isServiceRunning = MutableStateFlow(false)
     val isShortcutArmed = MutableStateFlow(false)
@@ -48,6 +53,14 @@ class TouchBlockService : AccessibilityService() {
       if (!enabled) {
         instance?.disarmAndUnlock()
       }
+    }
+
+    fun enterBankingSafeMode(): BankingSafeModeResult {
+      isShortcutArmed.value = false
+      val service = instance ?: return BankingSafeModeResult.ServiceUnavailable
+
+      service.disableForBankingSafeMode()
+      return BankingSafeModeResult.AccessibilityServiceDisabled
     }
   }
 
@@ -71,6 +84,11 @@ class TouchBlockService : AccessibilityService() {
     keyHoldJob = null
     shortcutController.reset()
     unlockScreen()
+  }
+
+  private fun disableForBankingSafeMode() {
+    disarmAndUnlock()
+    disableSelf()
   }
 
   private fun toggleLock() {
