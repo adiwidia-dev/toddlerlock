@@ -53,6 +53,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
@@ -164,8 +165,28 @@ fun ToddlerLockDashboard(modifier: Modifier = Modifier) {
       onClick = { context.startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)) },
     )
 
+    SectionTitle("Banking apps")
+    BankingSafeModePanel(
+      enabled = isAccessibilityEnabled || isShortcutArmed || isLocked,
+      onClick = {
+        val result = TouchBlockService.enterBankingSafeMode()
+        refreshPermissions()
+        val message =
+          when (result) {
+            TouchBlockService.BankingSafeModeResult.AccessibilityServiceDisabled -> {
+              isAccessibilityEnabled = false
+              "Banking Safe Mode enabled. Re-enable Accessibility to use ToddlerLock."
+            }
+            TouchBlockService.BankingSafeModeResult.ServiceUnavailable ->
+              "Shortcut disabled. If the bank app still blocks, turn off Accessibility permission."
+          }
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+      },
+    )
+
     UsageSteps()
     AndroidRestrictedSettingsNotice()
+    VersionFooter()
   }
 }
 
@@ -333,6 +354,40 @@ private fun PermissionItem(
 }
 
 @Composable
+private fun BankingSafeModePanel(
+  enabled: Boolean,
+  onClick: () -> Unit,
+) {
+  Box(
+    modifier =
+      Modifier
+        .fillMaxWidth()
+        .clip(RoundedCornerShape(8.dp))
+        .background(Color(0xFFFFF7E3))
+        .border(1.dp, Color(0xFFE5C879), RoundedCornerShape(8.dp))
+        .padding(16.dp),
+  ) {
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+      Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.Top) {
+        Icon(imageVector = Icons.Default.Warning, contentDescription = null, tint = Color(0xFF8A6400))
+        Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+          Text(text = "Banking Safe Mode", fontWeight = FontWeight.Bold, color = Charcoal)
+          Text(
+            text = "Temporarily disables ToddlerLock Accessibility before opening banking apps.",
+            fontSize = 12.sp,
+            color = Color(0xFF6D5A23),
+            lineHeight = 17.sp,
+          )
+        }
+      }
+      Button(enabled = enabled, onClick = onClick) {
+        Text("Enter Safe Mode")
+      }
+    }
+  }
+}
+
+@Composable
 private fun UsageSteps() {
   Box(
     modifier =
@@ -398,6 +453,17 @@ private fun AndroidRestrictedSettingsNotice() {
       }
     }
   }
+}
+
+@Composable
+private fun VersionFooter() {
+  Text(
+    text = "Version ${BuildConfig.VERSION_NAME}",
+    modifier = Modifier.fillMaxWidth(),
+    color = Color(0xFF8A8D84),
+    fontSize = 12.sp,
+    textAlign = TextAlign.Center,
+  )
 }
 
 @Composable

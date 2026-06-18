@@ -2,6 +2,18 @@
 
 All notable changes to ToddlerLock will be documented in this file.
 
+## v1.2.0 - 2026-06-03
+
+### Added
+
+- Added Banking Safe Mode to disable ToddlerLock Accessibility before opening banking apps.
+- Added app version text to the bottom of the main screen.
+
+### Changed
+
+- Reduced the Accessibility Service configuration to only request key-event filtering.
+- Updated app version to `1.2.0`.
+
 ## v1.1.0 - 2026-06-02
 
 ### Fixed
